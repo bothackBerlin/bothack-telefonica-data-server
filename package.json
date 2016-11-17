@@ -1,0 +1,10 @@
+{
+  "name": "bothack-telefonica-data-server",
+  "version": "1.0.0",
+  "repository": {
+    "url": "git@github.com:bothackBerlin/bothack-telefonica-data-server.git",
+    "type": "git"
+  },
+  "author": "Maximilian Goisser <goisser94@gmail.com>",
+  "license": "MIT"
+}
