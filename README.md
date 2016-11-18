@@ -14,3 +14,12 @@ The documentation for the meaning of the response fields can be found in [docs/t
 All the response fields are randomly generated / chosen based on the user_id you provide.
 
 ### GET /static/{bundles.xml,geraete.xml,tarife.xml}
+
+## Starting the server
+
+Clone this repo and run:
+
+```bash
+yarn # or your classic `npm install`
+node bin/server
+```
