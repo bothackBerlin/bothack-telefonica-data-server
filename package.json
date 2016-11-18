@@ -6,5 +6,9 @@
     "type": "git"
   },
   "author": "Maximilian Goisser <goisser94@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0",
+    "random-seed": "^0.3.0"
+  }
 }
