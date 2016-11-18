@@ -1,8 +1,6 @@
 var gen = require('random-seed');
 var express = require('express');
 
-const PORT = 4242;
-
 const AREA = [
   'tariff prepaid',
   'tariff postpaid',
@@ -238,14 +236,17 @@ function randomArrayValue(rng, arr) {
   return arr[rng.intBetween(0, max)];
 }
 
-var app = express();
+function buildServer() {
+  const app = express();
 
-app.use('/static', express.static('assets'));
+  app.use('/static', express.static('assets'));
 
-app.get('/users/:id', function(req, res) {
-  var fakeUser = generateFakeData(req.params.id);
-  res.send(JSON.stringify(fakeUser));
-});
+  app.get('/users/:id', function(req, res) {
+    var fakeUser = generateFakeData(req.params.id);
+    res.send(JSON.stringify(fakeUser));
+  });
 
-console.log('Starting server on port ' + PORT);
-app.listen(PORT);
+  return app;
+}
+
+module.exports = { buildServer };
