@@ -240,6 +240,8 @@ function randomArrayValue(rng, arr) {
 
 var app = express();
 
+app.use('/static', express.static('assets'));
+
 app.get('/users/:id', function(req, res) {
   var fakeUser = generateFakeData(req.params.id);
   res.send(JSON.stringify(fakeUser));

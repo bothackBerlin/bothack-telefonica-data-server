@@ -5,5 +5,12 @@
 This repository provides a small server to provide you with mock data
 for the [Telefónica digital companion challenge][telefonica-challenge] at bothack.berlin.
 
-The documentation for the meaning of the response fields can be found in [docs/targeting_criterias.csv](./docs/targeting_criterias.csv).
+
+## Routes
+
+### GET /users/:id
+
+The documentation for the meaning of the response fields can be found in [docs/targeting_criterias.csv](./docs/targeting_criterias.csv).  
 All the response fields are randomly generated / chosen based on the user_id you provide.
+
+### GET /static/{bundles.xml,geraete.xml,tarife.xml}
