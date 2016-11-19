@@ -1,5 +1,8 @@
 var gen = require('random-seed');
 var express = require('express');
+var faker = require('faker');
+var moment = require('moment');
+require('moment-duration-format');
 
 const AREA = [
   'tariff prepaid',
@@ -77,6 +80,8 @@ const PRODUCT_AFFINITY = [
 
 function generateFakeData(id) {
   var rng = gen.create(id);
+  faker.seed(parseInt(id));
+  faker.locale = 'de';
 
   var ag = randomAge(rng);
   var app = randomLastLogin(rng);
@@ -84,14 +89,25 @@ function generateFakeData(id) {
   var bp = randomBoolean(rng);
   var bs = randomArrayValue(rng, PLATFORM);
   var ch = randomBoolean(rng);
-  var db = null;
+
+  var db_moment = moment(rng.intBetween(0, 946684800) * 1000);
+  var db = db_moment.format('YYYY.MM.DD');
+  var db_at = db_moment;
+
   var dp = randomBoolean(rng);
   var dtg = randomArrayValue(rng, DISPLAY_TARGET_GROUP);
   var du30 = rng.intBetween(0, 3000000);
   var du90 = du30 + rng.intBetween(0, 50000000);
   var ea = randomBoolean(rng);
-  var ed = null;
-  var ep = null;
+
+  var ed_moment = moment(rng.intBetween(moment().unix(), moment().unix() + 10000000) * 1000)
+  var ed = ed_moment.format('YYYY.MM.DD');
+  var ed_at = ed_moment;
+
+  var ep_ms = moment(ed_moment,"DD/MM/YYYY HH:mm:ss").diff(moment(moment(),"DD/MM/YYYY HH:mm:ss"));
+  var ep_d = moment.duration(ep_ms);
+  var ep = parseInt(ep_d.format('D'));
+
   var fl = rng.intBetween(0, 1);
   var gd = randomArrayValue(rng, GENDER);
   var kvf = randomBoolean(rng);
@@ -127,8 +143,8 @@ function generateFakeData(id) {
   var po = randomArrayValue(rng, PERIOD_ORDER);
   var ps = 5;
   var pt = randomArrayValue(rng, PORTAL_TYPE);
-  var ra = null;
-  var rm = null;
+  var ra = rng.floatBetween(0, 200);
+  var rm = faker.internet.ip();
   var sa = "o2online";
   var se = "google.de";
   var sm = randomBoolean(rng);
@@ -137,19 +153,13 @@ function generateFakeData(id) {
   var tr = "o2 Genion L";
   var td = "Tariff Detail,o2 New Genion L (60/10) home office";
   var vv = randomBoolean(rng);
-  var zc = null;
-  var fr = null;
-  var pa = randomArrayValue(rng, PRODUCT_AFFINITY);
-  var fr = null;
+  var zc = rng.intBetween(10000, 10999).toString(); // TODO: enhance with total list of real zipcodes
 
-// db ,Date of Birth (dd.mm.jjjj),29.02.1981
-// ed,VVL (contract extension) Eligible Date ,8/26/2012
-// ep,days remaining till VVL Eligible Date,652
-// ra,Revenue Average,60.23
-// rm,Remote Address,92.77.165.44
-// zc,ZIP Code,3042
-// fr,first contract date,1/1/2001
-// fr,first contract date,1/1/2001
+  var fr_moment = moment(rng.intBetween(moment().unix() - 10000000, moment().unix()) * 1000)
+  var fr = fr_moment.format('YYYY.MM.DD');
+  var fr_at = fr_moment;
+
+  var pa = randomArrayValue(rng, PRODUCT_AFFINITY);
 
   return {
     user_id: id,
@@ -160,12 +170,14 @@ function generateFakeData(id) {
     bs,
     ch,
     db ,
+    db_at,
     dp,
     dtg,
     du90,
     du30 ,
     ea ,
     ed,
+    ed_at,
     ep,
     fl,
     gd,
@@ -214,6 +226,7 @@ function generateFakeData(id) {
     vv,
     zc,
     fr,
+    fr_at,
     pa,
     fr,
   };
