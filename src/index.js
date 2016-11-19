@@ -162,7 +162,8 @@ function generateFakeData(id) {
   var pa = randomArrayValue(rng, PRODUCT_AFFINITY);
 
   return {
-    user_id: id,
+    "type": "user",
+    id,
     ag,
     app,
     ar ,
